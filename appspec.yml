@@ -1,16 +1,26 @@
 version: 0.0
+os: linux
 
-os: linux 
-files: 
-- source: /
-destination: /home/ec2-user/nodeapp
+files:
+  - source: /
+    destination: /home/ec2-user/nodeapp
+file_exists_behavior: OVERWRITE
+
+permissions:
+  - object: /home/ec2-user/nodeapp
+    owner: ec2-user
+    group: ec2-user
 
 hooks:
-BeforeInstall:
-- location: scripts/BeforeInstall.sh
-  timeout: 60
-  runas: ec2-user
-AfterInstall:
- - location: scripts/AfterInstall.sh
-   timeout: 60
-   runas: ec2-user
+  BeforeInstall:
+    - location: scripts/BeforeInstall.sh
+      timeout: 60
+      runas: ec2-user
+  AfterInstall:
+    - location: scripts/AfterInstall.sh
+      timeout: 60
+      runas: ec2-user
+  ApplicationStart:
+    - location: scripts/ApplicationStart.sh
+      timeout: 60
+      runas: ec2-user

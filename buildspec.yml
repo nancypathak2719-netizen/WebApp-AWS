@@ -1,24 +1,26 @@
-version: 0.2 
+version: 0.2
 
-phases: 
-install:
-runtime-versions:
-nodejs: 18
-commands:
-- echo "Installing Dependencies"
-- npm install
-build : 
-commands: 
-- echo "Building application"
-- npm run build 
-post_build:
-commands:
-- echo "Build Completed on 'date'"
-- mkdir -p deployment
-- cp -r dist/* deploy/
-- cp appspec.yml deploy/
-- cp -r scripts/ deploy/scripts/
+phases:
+  install:
+    runtime-versions:
+      nodejs: 22
+    commands:
+      - echo "Installing dependencies"
+      - npm ci
+  build:
+    commands:
+      - echo "Building application"
+      - npm run build
+  post_build:
+    commands:
+      - echo "Build completed on $(date)"
+      - mkdir -p deploy
+      - cp -r dist deploy/
+      - cp server.js package.json appspec.yml deploy/
+      - cp -r scripts deploy/
+
 artifacts:
-files:
-- deploy/**/*
-discard-paths : no
+  base-directory: deploy
+  files:
+    - '**/*'
+  discard-paths: no

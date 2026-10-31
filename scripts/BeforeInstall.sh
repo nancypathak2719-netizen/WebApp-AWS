@@ -1,2 +1,3 @@
-echo "stopping node server if running"
-pskill node || echo "No Node Process Found" 
+#!/bin/bash
+echo "Stopping node server if running"
+pkill -f "node server.js" || echo "No node process found"
